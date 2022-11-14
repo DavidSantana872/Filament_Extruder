@@ -1,1 +1,0 @@
-// Funcionamiento de arduino eslavo
