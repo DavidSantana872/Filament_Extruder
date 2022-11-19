@@ -308,7 +308,6 @@ void Star_Off()
 {
 
   int Slave_Value = 0;
-
   lcd.clear();
   if (Star_Process_Value == false)
   {
@@ -329,7 +328,6 @@ void Star_Off()
         Wire.beginTransmission(1);
         Wire.write(Slave_Value);
         Wire.endTransmission();
-
         Star_Process_Value = true;
         lcd.clear();
         break;
@@ -377,6 +375,7 @@ void Star_Off()
 void Edit_Values(){
   lcd.clear();
   while(1){
+    Star_Process();
     TECLA = teclado.getKey();
     if (TECLA == 'B'){
       	lcd.clear();
@@ -445,6 +444,7 @@ void Edit_Values(){
         }
     }
     else if(identificador != 0){
+        Star_Process();
         switch (identificador)
         {
             case 1:
@@ -551,6 +551,7 @@ void Edit_Values(){
 }
 void get_valor_pid(){
         while(1){
+            Star_Process()
             TECLA = teclado.getKey();
             if (isdigit(TECLA) && i < dimension || TECLA == '.')
             {
