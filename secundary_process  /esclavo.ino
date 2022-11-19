@@ -2,9 +2,7 @@
 #include <Wire.h>
 
 // Arduino esclavo(control motor paso a paso)
-bool start_stop = false;
-int value;
-int estado = 0;
+int status = 0;
 int Dir =  2;
 int Pulse =  3;
 int Velocity = 65;
@@ -16,24 +14,22 @@ void setup() {
   pinMode(Pulse, OUTPUT);
   digitalWrite(Dir, HIGH);
   Wire.begin(1);
-  Wire.onReceive(funt);
+  Wire.onReceive(read_status);
 }
 void loop() {
   
-  Wire.onReceive(funt);
-  Serial.println(estado);
-
-  while(estado == 1){
-    
+  Wire.onReceive(read_status);
+  
+  while(status == 1){
     digitalWrite(Pulse, LOW);
     digitalWrite(Pulse, HIGH);
     delayMicroseconds(Velocity);  
   }
 
 }
-void funt(){
+void read_status(){
   if(Wire.available() == 1){
-    estado = Wire.read();
+    status = Wire.read();
   }
 }
 
