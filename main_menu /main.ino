@@ -177,13 +177,17 @@ void Information()
          lcd.setCursor(10, 0);
          lcd.print("/");
          lcd.print(Temperature);
-         lcd.setCursor(0, 1);   
-         if(Temperature==200){        
+         lcd.setCursor(8,1);
+         lcd.print("   "); 
+         if(Temperature >= (set_temperature-10)&& Star_Process_Value == true){ 
+            lcd.setCursor(0, 1);        
             lcd.print("Motor: ON");
+         }
+         else {       
+            lcd.setCursor(0, 1);   
+            lcd.print("Motor: OFF");
         }
-        else {        
-          lcd.print("Motor: OFF");
-        }
+
 
       }
       Star_Process();
@@ -393,9 +397,9 @@ void Edit_Values(){
     if(linea == 0){
         linea = 1;
     }
-    if (linea == 4)
+    if (linea == 3)
     {
-        linea = 3;
+        linea = 2;
     }
     
     if(identificador == 0){
