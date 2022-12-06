@@ -130,7 +130,8 @@ byte linea_2 = 0;
 int i = 0;
 char valor_char[dimension];
 //**********************************************************************************************************************************
-
+// 
+boolean slave_connection = false;
 void setup()
 {
   // Inicializar el LCD
@@ -301,6 +302,18 @@ void Star_Process()
     // Now we can write the PWM signal to the mosfet on digital pin D5
     analogWrite(PWM_pin, PID_Signal);
     previous_error = PID_error; // Remember to store the previous error for next loop.
+    
+    // enviamos la señal al arduino esclavo 
+    if(Temperature >= (set_temperature-10) && Star_Process_Value == true && slave_connection == true;){
+        int Slave_Value = 1;
+        Serial.println(Slave_Value);
+        Wire.beginTransmission(1);
+        Wire.write(Slave_Value);
+        Wire.endTransmission();
+        Star_Process_Value = true;
+        lcd.clear();
+        slave_connection = false;
+    }
   }
   else
   {
@@ -325,15 +338,7 @@ void Star_Off()
       if (TECLA == '1')
       {
         // Comunicacion arduino esclavo
-        // iniciar arduino esclavo
-        
-        int Slave_Value = 1;
-        Serial.println(Slave_Value);
-        Wire.beginTransmission(1);
-        Wire.write(Slave_Value);
-        Wire.endTransmission();
-        Star_Process_Value = true;
-        lcd.clear();
+        slave_connection = true; 
         break;
       }
       else if (TECLA == 'D')
@@ -359,11 +364,9 @@ void Star_Off()
         // apagar motor en esclavo
         
         Slave_Value = 0;
-
         Wire.beginTransmission(1);
         Wire.write(Slave_Value);
         Wire.endTransmission();
-
         Star_Process_Value = false;
         break;
       }
